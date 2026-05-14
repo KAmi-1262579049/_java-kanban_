@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/java-kanban.iml" filepath="$PROJECT_DIR$/java-kanban.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/.idea/java-kanban-fixed-compilable.iml" filepath="$PROJECT_DIR$/.idea/java-kanban-fixed-compilable.iml" />
->>>>>>> 881d2a4 (Весь код проекта)
     </modules>
   </component>
 </project>
