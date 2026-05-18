@@ -44,6 +44,8 @@ public interface TaskManager {
 
     void updateSubtask(Subtask subtask);
 
+    void deleteSubtaskById(int id);
+
     // Дополнительные методы
 
     List<Subtask> getSubtasksByEpicId(int epicId);
