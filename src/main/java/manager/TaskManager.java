@@ -32,11 +32,15 @@ public interface TaskManager {
 
     Epic createEpic(Epic epic);
 
+    void updateEpic(Epic epic);
+
     void deleteEpicById(int id);
 
     // Методы для подзадач
 
     List<Subtask> getAllSubtasks();
+
+    void deleteAllSubtasks();
 
     Subtask getSubtaskById(int id);
 
