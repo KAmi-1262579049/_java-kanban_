@@ -133,7 +133,9 @@ public class Task {
 
     // Переопределение hashCode
     @Override
-    public int hashCode() { return Objects.hash(id); }
+    public int hashCode() { 
+        return Objects.hash(id); 
+    }
 
     // Переопределение метода toString()
     @Override
