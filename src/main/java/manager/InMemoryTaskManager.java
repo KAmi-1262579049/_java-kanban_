@@ -84,8 +84,10 @@ public class InMemoryTaskManager implements TaskManager {
     // Удаляет все обычные задачи
     @Override
     public void deleteAllTasks() {
-        tasks.keySet().forEach(historyManager::remove);
-        tasks.values().forEach(this::removeFromPrioritized);
+        tasks.values().forEach(task -> {
+            historyManager.remove(task.getId());
+            removeFromPrioritized(task);
+        });
         tasks.clear();
     }
 
@@ -148,10 +150,12 @@ public class InMemoryTaskManager implements TaskManager {
     // Удаляет все эпики и все связанные с ними подзадачи
     @Override
     public void deleteAllEpics() {
-        subtasks.keySet().forEach(historyManager::remove);
-        subtasks.values().forEach(this::removeFromPrioritized);
+        subtasks.values().forEach(subtask -> {
+            historyManager.remove(subtask.getId());
+            removeFromPrioritized(subtask);
+        });
         subtasks.clear();
-        epics.keySet().forEach(historyManager::remove);
+        epics.values().forEach(epic -> historyManager.remove(epic.getId()));
         epics.clear();
     }
 
@@ -212,8 +216,10 @@ public class InMemoryTaskManager implements TaskManager {
     // Удаляет все подзадачи
     @Override
     public void deleteAllSubtasks() {
-        subtasks.keySet().forEach(historyManager::remove);
-        subtasks.values().forEach(this::removeFromPrioritized);
+        subtasks.values().forEach(subtask -> {
+            historyManager.remove(subtask.getId());
+            removeFromPrioritized(subtask);
+        });
         subtasks.clear();
         epics.values().forEach(epic -> {
             epic.clearSubtaskIds();
@@ -352,6 +358,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     // Проверяет, пересекается ли переданная задача с любой другой задачей или подзадачей
     protected boolean hasTimeIntersection(Task task) {
+        if (task == null || task.getStartTime() == null || task.getEndTime() == null) {
+            return false;
+        }
         return getPrioritizedTasks().stream()
                 .anyMatch(savedTask -> savedTask.getId() != task.getId() && isTasksTimeIntersect(savedTask, task));
     }
