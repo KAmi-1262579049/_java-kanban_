@@ -1,19 +1,26 @@
 package http;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpServer;
 import manager.Managers;
 import manager.TaskManager;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 // Класс HttpTaskServer для запуска и работы HTTP-сервера приложения
 public class HttpTaskServer {
     // Константа для хранения номера порта сервера
     public static final int PORT = 8080;
     // Поле для преобразования объектов в JSON и обратно
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(Duration.class, new DurationAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .serializeNulls()
+            .create();
     // Поле для хранения экземпляра HTTP-сервера
     private final HttpServer server;
 
