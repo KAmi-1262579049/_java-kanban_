@@ -23,10 +23,14 @@ public class PrioritizedHandler extends BaseHttpHandler implements HttpHandler {
     // Метод для обработки HTTP-запросов
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        if ("GET".equals(exchange.getRequestMethod()) && "/prioritized".equals(exchange.getRequestURI().getPath())) {
-            sendText(exchange, gson.toJson(taskManager.getPrioritizedTasks()));
-            return;
+        try {
+            if ("GET".equals(exchange.getRequestMethod()) && "/prioritized".equals(exchange.getRequestURI().getPath())) {
+                sendText(exchange, gson.toJson(taskManager.getPrioritizedTasks()));
+                return;
+            }
+            sendNotFound(exchange);
+        } catch (RuntimeException exception) {
+            sendServerError(exchange);
         }
-        sendNotFound(exchange);
     }
 }
